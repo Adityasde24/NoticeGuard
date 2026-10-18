@@ -41,7 +41,7 @@ def extract_text_from_pdf(pdf_path_or_bytes: Any) -> str:
     Provides friendly errors for password protection or scanned images without text.
     """
     try:
-        import fitz  # PyMuPDF
+        import pymupdf as fitz  # PyMuPDF
     except ImportError:
         raise IngestError("PyMuPDF (fitz) is not installed. Please install it with 'pip install pymupdf'.")
 
