@@ -82,7 +82,7 @@ noticeguard/
 ### 1. Installation
 Clone the repository and install the dependencies:
 ```bash
-git clone https://github.com/your-username/noticeguard.git
+git clone https://github.com/Adityasde24/noticeguard.git
 cd noticeguard
 pip install -r requirements.txt
 ```
