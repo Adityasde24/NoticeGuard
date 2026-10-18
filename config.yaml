@@ -9,9 +9,9 @@ app:
 ollama:
   enabled: true
   base_url: "http://127.0.0.1:11434"
-  model: "YOUR-TAG-HERE"
-  fallback_model: "YOUR-TAG-HERE"
-  timeout_seconds: 120
+  model: "gemma4:e4b"
+  fallback_model: "gemma4:2b"
+  timeout_seconds: 180
   max_retries: 1
   temperature: 0.1
   

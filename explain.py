@@ -39,13 +39,15 @@ def generate_plain_explanation(
     passages: List[Dict[str, Any]],
     verified_facts: Dict[str, Any],
     base_url: str = "http://127.0.0.1:11434",
-    model: str = DEFAULT_MODEL  
+    model: str = DEFAULT_MODEL,
+    force_mock: bool = False
 ) -> List[Dict[str, Any]]:
     """
     Generates plain-language breakdowns for document passages.
-    Uses local Gemma when available; falls back to deterministic rule-based generator.
+    Uses local Gemma when available; falls back to deterministic rule-based generator
+    if Ollama is offline or force_mock is True.
     """
-    if is_ollama_available(base_url) and len(passages) > 0:
+    if not force_mock and is_ollama_available(base_url) and len(passages) > 0:
         # Prepare condensed passages text
         passages_text = "\n\n".join([f"[{p['id']}]: {p['text']}" for p in passages[:8]])
         prompt = f"Explain these legal notice passages for a regular person:\n\n{passages_text}\n\nReturn JSON array only."

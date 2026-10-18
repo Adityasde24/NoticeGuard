@@ -214,6 +214,7 @@ def verify_facts(raw_facts: Dict[str, Any], source_text: str, passages: List[Dic
     """
     Runs deterministic verification across all extracted facts.
     Ensures every fact has a verified quote or is marked UNVERIFIED.
+    Returns match_type and score for transparent verification badges.
     """
     verified_facts = {}
     
@@ -224,6 +225,8 @@ def verify_facts(raw_facts: Dict[str, Any], source_text: str, passages: List[Dic
         "value": raw_facts.get("sender", "Unknown"),
         "quote": v_sender["quote"],
         "verified": v_sender["verified"],
+        "match_type": v_sender["match_type"],
+        "score": v_sender["score"],
         "passage_id": v_sender["passage_id"],
         "status": "STATED" if v_sender["verified"] else "UNVERIFIED"
     }
@@ -235,6 +238,8 @@ def verify_facts(raw_facts: Dict[str, Any], source_text: str, passages: List[Dic
         "value": raw_facts.get("recipient", "Unknown"),
         "quote": v_recip["quote"],
         "verified": v_recip["verified"],
+        "match_type": v_recip["match_type"],
+        "score": v_recip["score"],
         "passage_id": v_recip["passage_id"],
         "status": "STATED" if v_recip["verified"] else "UNVERIFIED"
     }
@@ -246,6 +251,8 @@ def verify_facts(raw_facts: Dict[str, Any], source_text: str, passages: List[Dic
         "value": raw_facts.get("demand", "Not specified"),
         "quote": v_demand["quote"],
         "verified": v_demand["verified"],
+        "match_type": v_demand["match_type"],
+        "score": v_demand["score"],
         "passage_id": v_demand["passage_id"],
         "status": "STATED" if v_demand["verified"] else "UNVERIFIED"
     }
@@ -259,6 +266,8 @@ def verify_facts(raw_facts: Dict[str, Any], source_text: str, passages: List[Dic
         "value": v_amount["amount"] if v_amount["verified"] else (f"₹{raw_amount}" if raw_amount else "None stated"),
         "numeric_value": v_amount.get("numeric_value"),
         "verified": v_amount["verified"] or v_amount_quote["verified"],
+        "match_type": v_amount_quote["match_type"] if v_amount_quote["verified"] else ("exact" if v_amount["verified"] else "unverified"),
+        "score": v_amount_quote["score"] if v_amount_quote["verified"] else (100.0 if v_amount["verified"] else 0.0),
         "quote": v_amount_quote["quote"],
         "passage_id": v_amount_quote["passage_id"],
         "status": "STATED" if (v_amount["verified"] or v_amount_quote["verified"]) else "UNKNOWN"
@@ -271,10 +280,51 @@ def verify_facts(raw_facts: Dict[str, Any], source_text: str, passages: List[Dic
         "raw_text": raw_facts.get("deadline_raw", "None specified"),
         "quote": v_dl["quote"],
         "verified": v_dl["verified"],
+        "match_type": v_dl["match_type"],
+        "score": v_dl["score"],
         "passage_id": v_dl["passage_id"],
         "relative_days": raw_facts.get("relative_days"),
         "is_ambiguous": raw_facts.get("is_ambiguous", False),
         "status": "STATED" if v_dl["verified"] else "UNKNOWN"
+    }
+
+    # Termination & Breach Clause
+    breach_quote = raw_facts.get("termination_breach_quote", "")
+    v_breach = verify_quote(breach_quote, source_text, passages) if breach_quote else {"verified": False, "quote": "", "match_type": "none", "score": 0.0, "passage_id": None}
+    verified_facts["termination_breach"] = {
+        "value": raw_facts.get("termination_breach", "Not specified"),
+        "quote": v_breach["quote"],
+        "verified": v_breach["verified"],
+        "match_type": v_breach["match_type"],
+        "score": v_breach["score"],
+        "passage_id": v_breach["passage_id"],
+        "status": "STATED" if v_breach["verified"] else ("UNKNOWN" if not breach_quote else "UNVERIFIED")
+    }
+
+    # Required Actions
+    action_quote = raw_facts.get("required_actions_quote", "")
+    v_action = verify_quote(action_quote, source_text, passages) if action_quote else {"verified": False, "quote": "", "match_type": "none", "score": 0.0, "passage_id": None}
+    verified_facts["required_actions"] = {
+        "value": raw_facts.get("required_actions", raw_facts.get("demand", "Not specified")),
+        "quote": v_action["quote"] or v_demand["quote"],
+        "verified": v_action["verified"] or v_demand["verified"],
+        "match_type": v_action["match_type"] if v_action["verified"] else v_demand["match_type"],
+        "score": v_action["score"] if v_action["verified"] else v_demand["score"],
+        "passage_id": v_action["passage_id"] or v_demand["passage_id"],
+        "status": "STATED" if (v_action["verified"] or v_demand["verified"]) else "UNVERIFIED"
+    }
+
+    # Financial Penalties / Interest
+    penalty_quote = raw_facts.get("financial_penalties_quote", "")
+    v_penalty = verify_quote(penalty_quote, source_text, passages) if penalty_quote else {"verified": False, "quote": "", "match_type": "none", "score": 0.0, "passage_id": None}
+    verified_facts["financial_penalties"] = {
+        "value": raw_facts.get("financial_penalties", "None specified"),
+        "quote": v_penalty["quote"],
+        "verified": v_penalty["verified"],
+        "match_type": v_penalty["match_type"],
+        "score": v_penalty["score"],
+        "passage_id": v_penalty["passage_id"],
+        "status": "STATED" if v_penalty["verified"] else ("UNKNOWN" if not penalty_quote else "UNVERIFIED")
     }
 
     # Consequence
@@ -284,6 +334,8 @@ def verify_facts(raw_facts: Dict[str, Any], source_text: str, passages: List[Dic
         "value": raw_facts.get("consequence", "None specified"),
         "quote": v_cons["quote"],
         "verified": v_cons["verified"],
+        "match_type": v_cons["match_type"],
+        "score": v_cons["score"],
         "passage_id": v_cons["passage_id"],
         "status": "STATED" if v_cons["verified"] else "UNVERIFIED"
     }

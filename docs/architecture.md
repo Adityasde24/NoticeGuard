@@ -56,6 +56,7 @@ flowchart TD
 | `verify.py` | Verifies that quotes exist in source text (exact NFC or fuzzy ratio $\ge 88\%$). Verifies numbers/amounts. | Marks unquoted claims as `UNVERIFIED` or `UNKNOWN`. |
 | `timeline.py` | Calculates calendar deadlines from relative durations (e.g. "within 15 days of receipt") using prompt receipt date. | Flags vague phrases ("immediately", "forthwith") as `AMBIGUOUS`. |
 | `explain.py` | Paraphrases complex legal clauses calmly. | Tags every item as `STATED`, `INTERPRETATION`, or `UNKNOWN`. Quotes remain untranslated. |
+| `missing_clauses.py` | Scans for silent/missing protections (cure periods, arbitration, itemized proof of debt, remittance coordinates). | Explicitly alerts recipient to omitted contractual protections. |
 | `escalate.py` | Builds actionable lawyer preparation brief. | Generates passage-specific questions, evidence checklist, and jurisdiction warnings. |
 | `translate.py` | Translates verified explanations into Hindi or Telugu. | Quotes are never translated. Preserves numbers and appends machine translation disclaimer. |
 | `app.py` | Local Streamlit web dashboard. | Binds strictly to `127.0.0.1:8501`. Complete session wipe button. |

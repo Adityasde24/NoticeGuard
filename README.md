@@ -49,6 +49,7 @@ noticeguard/
 ├── verify.py                  # Exact & fuzzy quote verifier, amount & date checker
 ├── timeline.py                # Chronological timeline & relative deadline math
 ├── explain.py                 # Calm plain-language explainer (STATED/INTERP/UNKNOWN)
+├── missing_clauses.py         # Silent & missing legal clause detection (PS2)
 ├── escalate.py                # Lawyer consultation checklist & jurisdiction alerts
 ├── guardrails.py              # Prompt injection scanner & verdict refusal filter
 ├── translate.py               # Mode A translation to Hindi/Telugu with preservation
@@ -87,10 +88,12 @@ pip install -r requirements.txt
 ```
 
 ### 2. (Optional) Run Local Gemma with Ollama
-If you wish to use Gemma via Ollama:
+If you wish to use Gemma via Ollama (offline local endpoint `127.0.0.1:11434`):
 ```bash
 # In a separate terminal:
-ollama run gemma2:latest
+ollama run gemma4:e4b
+# or lightweight fallback:
+ollama run gemma4:2b
 ```
 *(NoticeGuard will automatically detect if Ollama is running; if not, it automatically runs in deterministic verification mode with zero configuration needed!)*
 

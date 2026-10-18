@@ -97,7 +97,8 @@ def translate_text(
     text: str,
     target_lang: str,
     base_url: str = "http://127.0.0.1:11434",
-    model: str = DEFAULT_MODEL
+    model: str = DEFAULT_MODEL,
+    force_mock: bool = False
 ) -> Dict[str, Any]:
     """
     Translates an explanation or summary string into Hindi or Telugu.
@@ -116,7 +117,7 @@ def translate_text(
     lang_name = "Hindi" if target_lang == "hi" else ("Telugu" if target_lang == "te" else target_lang)
 
     translated = None
-    if is_ollama_available(base_url):
+    if not force_mock and is_ollama_available(base_url):
         prompt = (
             f"Translate this legal triage summary into {lang_name}.\n"
             f"Preserve all numbers and dates exactly.\n"

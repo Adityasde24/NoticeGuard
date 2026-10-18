@@ -15,14 +15,17 @@ INJECTION_PATTERNS = [
     # English
     r"(?i)\bignore\s+(?:all\s+)?(?:previous|prior)\s+instructions\b",
     r"(?i)\bsystem\s+prompt\b",
-    r"(?i)\byou\s+are\s+now\s+(?:an?\s+)?(?:ai|assistant|unrestricted|god)\b",
-    r"(?i)\bdisregard\s+(?:all\s+)?(?:rules|policies|guardrails)\b",
+    r"(?i)\byou\s+are\s+now\s+(?:an?\s+)?(?:ai|assistant|unrestricted|god|dan)\b",
+    r"(?i)\bdisregard\s+(?:all\s+)?(?:rules|policies|guardrails|instructions)\b",
     r"(?i)\bjailbreak\b",
     r"(?i)\bDAN\s+mode\b",
     r"(?i)\bexecute\s+(?:the\s+following|this)\s+(?:code|command)\b",
     r"(?i)\bprint\s+(?:your\s+)?(?:system|hidden|internal)\s+(?:prompt|instructions)\b",
     r"(?i)\bdo\s+not\s+verify\b",
     r"(?i)\bpretend\s+you\s+are\b",
+    r"(?i)\boutput\s+that\s+the\s+recipient\s+has\s+zero\s+liability\b",
+    r"(?i)\bnew\s+instructions?:?\s*",
+    r"(?i)\bbypass\s+(?:security|filters?|guardrails?)\b",
     # Hindi (Devanagari)
     r"पिछल[ेा]\s+(?:सभी\s+)?निर्देश(?:ों)?\s+को?\s*(?:भूल\s+जाओ|रद्द\s+करो|अस्वीकार\s+करो)",
     r"सिस्टम\s+(?:प्रॉम्प्ट|निर्देश)",
@@ -39,13 +42,17 @@ INJECTION_PATTERNS = [
 VERDICT_QUERY_PATTERNS = [
     # English
     r"(?i)\b(?:is\s+this|is\s+it)\s+(?:[\w\s]{0,20}\s+)?(?:legal|illegal|valid|invalid|enforceable|unenforceable|binding|void)\b",
-    r"(?i)\bshould\s+i\s+(?:[\w\s]{0,20}\s+)?(?:pay|ignore|comply|agree|sign|fight)\b",
+    r"(?i)\bshould\s+i\s+(?:[\w\s]{0,20}\s+)?(?:pay|ignore|comply|agree|sign|fight|settle)\b",
     r"(?i)\bdo\s+i\s+have\s+to\s+pay\b",
+    r"(?i)\b(?:can\s+i|should\s+i)\s+(?:just\s+)?(?:ignore|disregard)\s+(?:this|the)\s+notice\b",
     r"(?i)\bwill\s+i\s+(?:go\s+to\s+jail|be\s+arrested|win|lose)\b",
     r"(?i)\b(?:can|will)\s+(?:the\s+)?(?:police|they|landlord|court)\s+(?:arrest|jail)\s+me\b",
     r"(?i)\b(?:what\s+is\s+your\s+)?(?:legal\s+)?verdict\b",
     r"(?i)\bgive\s+(?:me\s+)?legal\s+advice\b",
     r"(?i)\bcan\s+they\s+really\s+evict\s+me\b",
+    r"(?i)\b(?:what\s+are\s+my|what's\s+my)\s+chances?\s+(?:of\s+winning|in\s+court)\b",
+    r"(?i)\bam\s+i\s+(?:legally\s+)?(?:liable|responsible|guilty)\b",
+    r"(?i)\bwhat\s+should\s+my\s+legal\s+strategy\s+be\b",
     # Hindi
     r"क्या\s+यह(?:\s+नोटिस)?(?:\s+कानूनी\s+रूप\s+से)?\s+(?:कानूनी|अवैध|मान्य|अमान्य|लागू|वैध)",
     r"(?:भुगतान\s+करना|पैसे\s+देने|रुपये\s+देने)\s+चाहिए",
@@ -99,6 +106,27 @@ def scan_for_injection(text: str) -> Tuple[bool, List[str]]:
             detected.append(match.group(0))
     
     return (len(detected) > 0), detected
+
+def sanitize_prompt_injection(text: str) -> Tuple[str, bool, List[str]]:
+    """
+    Scans and neutralizes adversarial prompt injection patterns from document text.
+    Replaces hostile directive clauses with a safe sanitized placeholder.
+    Returns (sanitized_text, has_injection, detected_patterns).
+    """
+    if not text:
+        return "", False, []
+
+    detected = []
+    sanitized = text
+    for pattern in INJECTION_PATTERNS:
+        matches = list(re.finditer(pattern, sanitized))
+        if matches:
+            for m in matches:
+                detected.append(m.group(0))
+            sanitized = re.sub(pattern, "[SECURITY REDACTED: Adversarial Injection Clause Neutralized]", sanitized)
+
+    has_injection = len(detected) > 0
+    return sanitized, has_injection, detected
 
 def is_verdict_query(query: str) -> bool:
     """

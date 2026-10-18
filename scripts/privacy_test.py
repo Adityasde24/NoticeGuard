@@ -81,17 +81,22 @@ def run_privacy_audit():
     print("-" * 70)
 
     if len(external_calls) == 0:
-        print("🔒 PRIVACY AUDIT PASSED: ZERO EXTERNAL CONNECTIONS MADE!")
-        print("   All processing occurred 100% locally on the device.")
+        print("[PASS] PRIVACY AUDIT PASSED: ZERO EXTERNAL CONNECTIONS MADE!")
+        print("       All processing occurred 100% locally on the device (127.0.0.1).")
         print("=" * 70)
         return True
     else:
-        print("❌ PRIVACY AUDIT FAILED: Non-local connections were attempted:")
+        print("[FAIL] PRIVACY AUDIT FAILED: Non-local connections were attempted:")
         for c in external_calls:
             print(f"   - {c['host']}:{c['port']}")
         print("=" * 70)
         return False
 
 if __name__ == "__main__":
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
     passed = run_privacy_audit()
     sys.exit(0 if passed else 1)
