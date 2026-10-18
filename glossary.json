@@ -1,0 +1,62 @@
+{
+  "legal_notice": {
+    "term": "Legal Notice",
+    "plain_meaning": "A formal written warning sent by an advocate on behalf of a client, detailing a grievance, demanding specific action or payment, and giving a deadline before filing a lawsuit.",
+    "hindi": "कानूनी नोटिस: किसी पक्ष या उसके वकील द्वारा भेजा गया औपचारिक लिखित पत्र जिसमें दावा प्रस्तुत किया जाता है और मुकदमा दायर करने से पहले निश्चित समयसीमा दी जाती है।",
+    "telugu": "చట్టపరమైన నోటీసు: కోర్టులో కేసు వేయడానికి ముందు ప్రత్యర్థికి తమ డిమాండ్ మరియు గడువును తెలియజేస్తూ న్యాయవాది ద్వారా పంపే అధికారిక పత్రం."
+  },
+  "without_prejudice": {
+    "term": "Without Prejudice",
+    "plain_meaning": "A phrase meaning that statements or offers made in this letter cannot be used as an admission of liability in court if negotiations fail.",
+    "hindi": "पूर्वाग्रह के बिना (Without Prejudice): इसका अर्थ है कि इस पत्र में की गई बातों को अदालत में गलती की स्वीकृति के रूप में इस्तेमाल नहीं किया जा सकता।",
+    "telugu": "పూర్వపక్షం లేకుండా (Without Prejudice): చర్చలు విఫలమైతే ఈ లేఖలోని అంశాలను కోర్టులో అంగీకారంగా ఉపయోగించలేరు."
+  },
+  "section_138": {
+    "term": "Section 138 (Negotiable Instruments Act)",
+    "plain_meaning": "Criminal offense regarding cheque dishonour (bouncing) due to insufficient funds. The notice must demand payment within 15 days of receipt of notice.",
+    "hindi": "धारा 138 (चेक बाउंस): बैंक खाते में पर्याप्त राशि न होने पर चेक अस्वीकृत होने पर आपराधिक कार्रवाई। नोटिस मिलने के 15 दिनों के भीतर भुगतान करना अनिवार्य होता है।",
+    "telugu": "సెక్షన్ 138 (చెక్ బౌన్స్): ఖాతాలో నిధులు లేక చెక్ అనాదరణకు గురైనప్పుడు వేసే కేసు. నోటీసు అందిన 15 రోజుల్లోగా చెల్లింపు చేయాలని కోరుతుంది."
+  },
+  "section_106": {
+    "term": "Section 106 (Transfer of Property Act)",
+    "plain_meaning": "Statutory notice terminating a lease or tenancy (typically requiring 15 days notice for residential month-to-month leases).",
+    "hindi": "धारा 106 (संपत्ति अंतरण अधिनियम): किरायेदारी या लीज समाप्त करने का वैधानिक नोटिस (आमतौर पर 15 दिन का समय)।",
+    "telugu": "సెక్షన్ 106 (ఆస్తి బదిలీ చట్టం): అద్దె ఒప్పందాన్ని రద్దు చేస్తూ ఇచ్చే చట్టబద్ధమైన నోటీసు (సాధారణంగా 15 రోజుల గడువు)."
+  },
+  "mesne_profits": {
+    "term": "Mesne Profits",
+    "plain_meaning": "Compensation or damages claimed by a property owner for wrongful possession of property after tenancy has been terminated.",
+    "hindi": "अंतःकालीन लाभ (Mesne Profits): लीज समाप्त होने के बाद भी संपत्ति पर अवैध कब्जे के लिए मकान मालिक द्वारा मांगा गया हर्जाना।",
+    "telugu": "మీస్నే లాభాలు (Mesne Profits): అద్దె గడువు ముగిసినా ఖాళీ చేయకుండా అనధికారికంగా ఉన్నందుకు యజమాని క్లెయిమ్ చేసే నష్టపరిహారం."
+  },
+  "specific_performance": {
+    "term": "Specific Performance",
+    "plain_meaning": "An order by a court requiring a party to complete the exact terms of an agreement, rather than merely paying monetary damages.",
+    "hindi": "विशिष्ट अनुपालन: अदालत का आदेश जिसमें किसी पक्ष को अनुबंध की वास्तविक शर्तों को पूरा करने के लिए बाध्य किया जाता है।",
+    "telugu": "నిర్దిష్ట పనితీరు (Specific Performance): నష్టపరిహారం మాత్రమే కాకుండా ఒప్పందంలోని షరతులను యథాతథంగా నెరవేర్చాలని కోర్టు ఇచ్చే ఆదేశం."
+  },
+  "injunction": {
+    "term": "Injunction",
+    "plain_meaning": "A judicial order restraining a person from doing a specific act (temporary or permanent).",
+    "hindi": "निषेधाज्ञा (Injunction): किसी व्यक्ति को कोई विशिष्ट कार्य करने से रोकने वाला अदालती आदेश।",
+    "telugu": "ఇంజక్షన్ (Injunction): ఏదైనా నిర్దిష్ట చర్య చేయకుండా ఒక వ్యక్తిని నిరోధించే న్యాయస్థాన ఆదేశం."
+  },
+  "vakalatnama": {
+    "term": "Vakalatnama",
+    "plain_meaning": "A legal document authorizing an advocate to represent a client in legal proceedings.",
+    "hindi": "वकालतनामा: वह कानूनी दस्तावेज जो किसी वकील को मुवक्किल की ओर से पेश होने का अधिकार देता है।",
+    "telugu": "వకాలత్‌నామా: క్లయింట్ తరపున కోర్టులో వాదించడానికి న్యాయవాదికి అధికారం ఇచ్చే చట్టపరమైన పత్రం."
+  },
+  "cheque_return_memo": {
+    "term": "Cheque Return Memo",
+    "plain_meaning": "An official slip issued by a bank stating the specific reason a cheque was dishonoured (e.g. 'Funds Insufficient').",
+    "hindi": "चेक रिटर्न मेमो: बैंक द्वारा जारी आधिकारिक पर्ची जिसमें चेक अस्वीकृत होने का कारण (जैसे 'खाते में अपर्याप्त राशि') दर्ज होता है।",
+    "telugu": "చెక్ రిటర్న్ మెమో: చెక్ ఎందుకు బౌన్స్ అయిందో కారణాన్ని పేర్కొంటూ బ్యాంక్ ఇచ్చే అధికారిక రసీదు."
+  },
+  "cause_of_action": {
+    "term": "Cause of Action",
+    "plain_meaning": "The set of facts or legal grounds that entitle a party to bring a claim or lawsuit.",
+    "hindi": "वाद हेतुक (Cause of Action): वे तथ्य या कानूनी आधार जो किसी व्यक्ति को अदालत में दावा करने का अधिकार देते हैं।",
+    "telugu": "కేసు కారణం (Cause of Action): న్యాయస్థానంలో దావా వేయడానికి ఆధారం ఇచ్చే వాస్తవాల సమాహారం."
+  }
+}

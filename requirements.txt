@@ -1,0 +1,10 @@
+streamlit==1.66.0
+pymupdf==1.28.2
+dateparser==1.4.3
+rapidfuzz==3.14.6
+pyyaml==6.0.3
+requests==2.34.2
+pydantic==2.14.1
+pandas==3.0.6
+numpy==2.5.4
+pytest>=8.0.0
