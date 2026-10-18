@@ -90,7 +90,7 @@ pip install -r requirements.txt
 If you wish to use Gemma via Ollama:
 ```bash
 # In a separate terminal:
-ollama run gemma2:latest
+ollama run gemma4:e4b
 ```
 *(NoticeGuard will automatically detect if Ollama is running; if not, it automatically runs in deterministic verification mode with zero configuration needed!)*
 
