@@ -9,12 +9,12 @@ app:
 ollama:
   enabled: true
   base_url: "http://127.0.0.1:11434"
-  model: "gemma2:latest"
-  fallback_model: "gemma:2b"
-  timeout_seconds: 45
+  model: "YOUR-TAG-HERE"
+  fallback_model: "YOUR-TAG-HERE"
+  timeout_seconds: 120
   max_retries: 1
   temperature: 0.1
-
+  
 verifier:
   fuzzy_threshold: 88.0
   max_quote_length: 500

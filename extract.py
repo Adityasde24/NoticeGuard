@@ -4,7 +4,9 @@ Connects locally to Ollama (127.0.0.1:11434) to run narrow structured extraction
 passes with schema validation and 1 retry.
 Includes an intelligent deterministic fallback parser when Ollama is offline.
 """
-
+import os
+import sys
+import yaml
 import json
 import re
 import urllib.request
@@ -12,10 +14,18 @@ import urllib.error
 from typing import Dict, Any, Optional, List
 from segment import normalize_unicode_nfc, normalize_digits
 
+_CFG_PATH = os.path.join(os.path.dirname(__file__), "config.yaml")
+try:
+    with open(_CFG_PATH, encoding="utf-8") as _f:
+        _CFG = yaml.safe_load(_f) or {}
+except Exception:
+    _CFG = {}
+
 # Default Ollama local endpoint
 DEFAULT_OLLAMA_URL = "http://127.0.0.1:11434"
-DEFAULT_MODEL = "gemma2:latest"
-FALLBACK_MODEL = "gemma:2b"
+# Environment variable wins, so each laptop can use its own model without editing code.
+DEFAULT_MODEL = os.environ.get("NOTICEGUARD_MODEL") or _CFG.get("ollama", {}).get("model", "gemma3n:e2b")
+FALLBACK_MODEL = os.environ.get("NOTICEGUARD_FALLBACK_MODEL") or _CFG.get("ollama", {}).get("fallback_model", DEFAULT_MODEL)
 
 def is_ollama_available(base_url: str = DEFAULT_OLLAMA_URL) -> bool:
     """Checks if local Ollama daemon is reachable on 127.0.0.1."""
@@ -137,7 +147,12 @@ def deterministic_fallback_extraction(text: str, passages: List[Dict[str, Any]])
             facts["recipient_quote"] = hi_to.group(0).strip()
 
     # 2. Sender / Advocate extraction (Under instructions from / on behalf of / Advocate)
-    sender_match = re.search(r"(?i)(?:under\s+instructions\s+from|on\s+behalf\s+of\s+my\s+client,?\s*)([^\n,\.]{3,70})", norm_text)
+    sender_match = re.search(
+        r"(?i:(?:my|our)\s+client)\s*,?\s*((?i:mr|mrs|ms|shri|smt|dr|m/s)\.?\s+[^\n,]{2,60})",
+        norm_text,
+    )
+    if not sender_match:
+        sender_match = re.search(r"(?i)(?:under\s+instructions\s+from|on\s+behalf\s+of)\s+([^\n,\.]{3,70})", norm_text)
     if sender_match:
         facts["sender"] = sender_match.group(1).strip()
         facts["sender_quote"] = sender_match.group(0).strip()

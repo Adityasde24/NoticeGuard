@@ -3,7 +3,7 @@ NoticeGuard - Streamlit Local-First Web Application.
 Private Legal Document Triage Agent for India.
 Gemma explains, code verifies. Zero cloud calls, 127.0.0.1 localhost only.
 """
-
+import re
 import os
 import json
 import yaml
@@ -378,9 +378,10 @@ if st.session_state.doc_data is not None:
         
         # Urgency Banner
         urgency = timeline.get("urgency_level", "MEDIUM")
+
         urg_color = {"CRITICAL": "red", "HIGH": "orange", "MEDIUM": "blue", "LOW": "green"}.get(urgency, "blue")
         st.markdown(f"**{ui_strings.get('urgency_badge', 'Urgency Level')}:** :{urg_color}[**{urgency}**]")
-
+        st.markdown(f"**Notice Type:** {checklist['notice_type']}")
         colA, colB = st.columns(2)
         with colA:
             st.markdown(f"**{ui_strings.get('sender', 'Sender')}:**")

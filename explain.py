@@ -10,7 +10,7 @@ Every item is strictly tagged with:
 import re
 from typing import List, Dict, Any, Optional
 from segment import normalize_unicode_nfc
-from extract import is_ollama_available, query_local_ollama, extract_json_from_llm_response
+from extract import is_ollama_available, query_local_ollama, extract_json_from_llm_response, DEFAULT_MODEL
 from guardrails import sanitize_output_verdicts
 
 EXPLAIN_SYSTEM_PROMPT = """You are NoticeGuard's calm legal interpreter.
@@ -39,7 +39,7 @@ def generate_plain_explanation(
     passages: List[Dict[str, Any]],
     verified_facts: Dict[str, Any],
     base_url: str = "http://127.0.0.1:11434",
-    model: str = "gemma2:latest"
+    model: str = DEFAULT_MODEL  
 ) -> List[Dict[str, Any]]:
     """
     Generates plain-language breakdowns for document passages.

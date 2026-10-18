@@ -11,7 +11,7 @@ Rules:
 import re
 from typing import Dict, Any, List, Optional
 from segment import normalize_unicode_nfc, normalize_digits
-from extract import is_ollama_available, query_local_ollama
+from extract import is_ollama_available, query_local_ollama, DEFAULT_MODEL
 
 MACHINE_TRANSLATION_NOTICES = {
     "en": "Machine translation. May contain errors. Check the original.",
@@ -97,7 +97,7 @@ def translate_text(
     text: str,
     target_lang: str,
     base_url: str = "http://127.0.0.1:11434",
-    model: str = "gemma2:latest"
+    model: str = DEFAULT_MODEL
 ) -> Dict[str, Any]:
     """
     Translates an explanation or summary string into Hindi or Telugu.
